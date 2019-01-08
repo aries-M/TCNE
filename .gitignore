@@ -72,6 +72,8 @@ docs/_build/
 # PyBuilder
 target/
 
+# data
+
 # Jupyter Notebook
 .ipynb_checkpoints
 
@@ -114,3 +116,6 @@ res/
 log/
 data/
 *.swp
+
+# data
+*.dat
