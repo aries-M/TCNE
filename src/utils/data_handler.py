@@ -1,5 +1,6 @@
 import os
 import sys
+import re
 import networkx as nx
 import json
 import numpy as np
@@ -16,7 +17,7 @@ class DataHandler(object):
         with open(file_path, 'r') as f:
             for line in f:
                 line = line.strip()
-                if len(line) < 2:
+                if len(line) == 0:
                     continue
                 items = line.split()
                 if len(items) == 2:
@@ -27,9 +28,37 @@ class DataHandler(object):
                 lst.append(items)
         return lst
 
+    @staticmethod
+    def load_name(file_path):
+        """
+            Load name file, which map str to id {str, id}
+            Return reversed dict {id, str} (node_id, name)
+        """
+        mp = dict()
+        with open(file_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if len(line) == 0:
+                    continue
+                items = line.split()
+                mp[items[0]] = int(items[1])
+        reverse_mp = dict(zip(mp.values(), mp.keys()))
+        return reverse_mp
+
+    @staticmethod
+    def load_json(file_path):
+        """
+            Load json file
+        """
+        with open(file_path, "r") as f:
+            s = f.read()
+            s = re.sub('\s', "", s)
+            print (s)
+        return json.loads(s)
+
 if __name__ == "__main__":
-    file_path = "./t.dat"
-    lst = DataHandler.load_edge(file_path)
-    print (len(lst))
-    print ("%d\t%d\t%f" % (lst[0][0], lst[0][1], lst[0][2]))
+    s = DataHandler.load_json(file_path)
+    #print (s)
+    #lst = DataHandler.load_edge(file_path)
+    #mp = DataHandler.load_name(file_path)
 
