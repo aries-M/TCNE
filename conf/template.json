@@ -1,0 +1,23 @@
+{
+    "static_info" : {
+        "random_seed": 157,
+        "np_seed": 213,
+        "network_folder": {
+            "name": "toy",
+            "entity": "entity.dat",
+            "tag": "tag.dat",
+            "edge": "edge.dat",
+            "mix_edge": "mix_edge.dat",
+            "label": "label.dat"
+        } 
+    },    
+   "run_modules": [
+        {
+            "func": "construct_graph",
+            "params": {
+                "func": "construct_graph",
+                "directed": false
+            } 
+        }
+   ] 
+}
