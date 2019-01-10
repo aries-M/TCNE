@@ -11,7 +11,8 @@ class DataHandler(object):
     def load_edge(file_path):
         """ 
             Read edge file {int, int [, weight]}
-            Return edge list with weight [int, int, float]
+            Return:
+                edge list with weight [int, int, float]
         """
         lst = []
         with open(file_path, 'r') as f:
@@ -32,7 +33,9 @@ class DataHandler(object):
     def load_name(file_path):
         """
             Load name file, which map str to id {str, id}
-            Return reversed dict {id, str} (node_id, name)
+
+            Return:
+                reversed dict {id, str} (node_id, name)
         """
         mp = dict()
         with open(file_path, 'r') as f:
@@ -53,12 +56,9 @@ class DataHandler(object):
         with open(file_path, "r") as f:
             s = f.read()
             s = re.sub('\s', "", s)
-            print (s)
         return json.loads(s)
 
 if __name__ == "__main__":
-    s = DataHandler.load_json(file_path)
-    #print (s)
-    #lst = DataHandler.load_edge(file_path)
-    #mp = DataHandler.load_name(file_path)
-
+    f = "t.dat"
+    ids = list(DataHandler.load_name(f).keys())
+    print (ids)
