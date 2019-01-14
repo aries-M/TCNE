@@ -44,7 +44,7 @@ class DataHandler(object):
                 if len(line) == 0:
                     continue
                 items = line.split()
-                mp[items[0]] = int(items[1])
+                mp[" ".join(items[:-1])] = int(items[-1])
         reverse_mp = dict(zip(mp.values(), mp.keys()))
         return reverse_mp
 

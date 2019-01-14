@@ -4,6 +4,8 @@ import time
 import logging
 from datetime import datetime
 
+import pdb
+
 def get_time_str():
     return datetime.now().strftime("%Y-%m-%d-%H:%M:%S.%f")
 
@@ -24,6 +26,7 @@ def get_logger(log_filename=None, module_name=__name__, level=logging.INFO):
         raise ValueError("log_filename invalid!")
 
     # build logger
+    level = eval(level)
     logger = logging.getLogger(module_name)
     logger.setLevel(level)
     handler.setLevel(level)

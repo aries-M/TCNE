@@ -34,10 +34,10 @@ def init(args, params, whole_params):
     info["network_folder"]["name"] = os.path.join(DATA_PATH, params["network_folder"]["name"])
 
     if info["log"] == 0:
-        info["logger"] = ct.get_logger()
+        info["logger"] = ct.get_logger(level="logging.%s"%(args.level))
     else:
         log_path = os.path.join(LOG_PATH, info["time"] + ".log")
-        info["logger"] = ct.get_logger(log_path)
+        info["logger"] = ct.get_logger(log_filename=log_path, level="logging.%s"%(args.level))
         ct.symlink(log_path, os.path.join(LOG_PATH, "new_log"))
 
     ct.symlink(info["res_home"], os.path.join(RES_PATH, "new_res"))
@@ -49,10 +49,12 @@ def init(args, params, whole_params):
 def main():
     parser = argparse.ArgumentParser(formatter_class = argparse.RawTextHelpFormatter)
     parser.add_argument("--conf", type = str, default = "toy")
-    parser.add_argument("--log", type = int, default = 0)
+    parser.add_argument("--log", type = int, default = 0, help="0 if log print out in screen else 1")
+    parser.add_argument("--level", type = str, default = "INFO", help="log level = INFO | DEBUG")
     args = parser.parse_args()
     params = dh.load_json(os.path.join(CONF_PATH, args.conf + ".json"))
     info = init(args, params["static_info"], params)
+    info["logger"].debug("log level is DEBUG")
     info["logger"].info("init finished! \n %s \n" %(info))
 
     res = {}
@@ -62,10 +64,6 @@ def main():
         mdl_params = module["params"]
         mdl = __import__(mdl_name + "." + mdl_params["func"], fromlist=[mdl_name])
         res[mdl_name] = getattr(mdl, mdl_name)(mdl_params, info = info, pre_res = res, mdl_name = mdl_name)
-        print (res[mdl_name][0].nodes(data=True)) 
-        print (res[mdl_name][0].edges(data=True)) 
-        print (res[mdl_name][1].nodes(data=True)) 
-        print (res[mdl_name][1].edges(data=True)) 
 
 if __name__ == "__main__":
     main()
